@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Why I Like Building Gunpla — Deep & Playful</title>
+  <meta name="description" content="A rich, beautiful, interactive page explaining why building Gunpla is a hobby — techniques, tools, finishes, weathering recipes, photography tips, printable checklist, and playful visuals." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#fbfdff;
+      --card-grad: linear-gradient(180deg,#ffffff,#f6fbff);
+      --ink:#0b2433;
+      --muted:#647986;
+      --rx-blue:#173db8;
+      --rx-red:#ff3b3b;
+      --rx-yellow:#ffd100;
+      --glass: rgba(12,32,56,0.06);
+      --radius:16px;
+      --max:1300px;
+
+      --soft: 0 18px 60px rgba(12,32,56,0.06);
+      --pop: 0 28px 120px rgba(12,32,56,0.08);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      background: radial-gradient(1000px 360px at 6% 8%, rgba(23,61,184,0.035), transparent 8%), var(--bg);
+      color:var(--ink);
+      -webkit-font-smoothing:antialiased;
+      padding:28px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .site{
+      width:min(var(--max),96%);
+      display:flex;
+      flex-direction:column;
+      gap:22px;
+    }
+
+    /* Nav */
+    .nav{ display:flex; justify-content:center; gap:12px; flex-wrap:wrap }
+    .nav a{ text-decoration:none; color:var(--ink); padding:10px 14px; border-radius:999px; font-weight:700; background:rgba(255,255,255,0.7); border:1px solid rgba(12,32,56,0.04) }
+    .nav a:hover{ box-shadow:var(--soft); transform:translateY(-3px); }
+    .nav a.active{ background: linear-gradient(90deg,var(--rx-blue),var(--rx-red)); color:#04112a; box-shadow:var(--pop) }
+
+    /* Hero */
+    .hero{
+      display:grid; grid-template-columns:1fr 460px; gap:22px; align-items:center;
+      padding:32px; border-radius:var(--radius); background:var(--card-grad); border:1px solid var(--glass);
+      box-shadow:var(--soft); position:relative; overflow:visible;
+    }
+    h1{ font-family:'Playfair Display',serif; color:var(--rx-blue); font-size:2.4rem; margin-bottom:8px }
+    .lead{ color:var(--muted); font-size:1.05rem; line-height:1.6; margin-bottom:12px }
+
+    .accent-row{ display:flex; gap:10px; flex-wrap:wrap }
+    .chip{ padding:8px 12px; border-radius:999px; font-weight:800; background:linear-gradient(90deg,var(--rx-blue),var(--rx-red)); color:#04112a; box-shadow:0 12px 44px rgba(23,61,184,0.06) }
+
+    .visual{
+      border-radius:12px; background:#fff; border:1px solid var(--glass); padding:16px; min-height:340px; display:flex; align-items:center; justify-content:center; box-shadow:var(--pop);
+    }
+    .model{ width:100%; max-width:420px; display:block; transform-origin:center; transition:transform .28s cubic-bezier(.2,.9,.25,1) }
+    .visual:hover .model{ transform:translateY(-8px) scale(1.01) }
+
+    .float-deco{ position:absolute; right:-80px; top:-60px; width:420px; height:420px; filter: blur(36px); background: conic-gradient(from 40deg, rgba(23,61,184,0.04), rgba(255,59,59,0.03), rgba(255,209,0,0.02)); transform: rotate(-10deg); pointer-events:none; }
+
+    /* Main layout */
+    .main{ display:grid; grid-template-columns: 1fr 380px; gap:22px; align-items:start; margin-top:8px }
+    .card{ background:#fff; padding:18px; border-radius:12px; border:1px solid var(--glass); box-shadow:var(--soft) }
+
+    .section-title{ color:var(--rx-blue); font-weight:800; margin-bottom:10px }
+
+    .grid-2{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px }
+    .tile{ background:linear-gradient(180deg,#ffffff,#fbfdff); padding:14px; border-radius:10px; border:1px solid rgba(12,32,56,0.03); font-weight:800; color:#14323e; transition:transform .22s, box-shadow .22s }
+    .tile:hover{ transform:translateY(-8px); box-shadow:0 30px 100px rgba(12,32,56,0.06) }
+
+    /* Big content sections */
+    .detail{ margin-top:12px; padding:14px; border-radius:10px; background:#fff; border:1px solid rgba(12,32,56,0.03) }
+    .detail h4{ margin-bottom:8px; color:var(--rx-blue) }
+
+    /* Accordion */
+    .acc{ margin-top:12px; display:flex; flex-direction:column; gap:8px }
+    .acc-item{ border-radius:10px; overflow:hidden; border:1px solid rgba(12,32,56,0.04); background:#fff }
+    .acc-head{ padding:10px 12px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:700 }
+    .acc-body{ padding:0 12px; max-height:0; overflow:hidden; transition:max-height .45s, padding .35s; color:var(--muted) }
+    .acc-item.open .acc-body{ padding:12px; max-height:420px }
+
+    /* Timeline */
+    .timeline{ display:flex; flex-direction:column; gap:10px; margin-top:12px }
+    .step{ display:flex; gap:12px; padding:12px; border-radius:10px; background:linear-gradient(180deg,#fff,#fafcff); border:1px solid rgba(12,32,56,0.03) }
+    .dot{ width:46px; height:46px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:900; color:#04112a; background:linear-gradient(90deg,var(--rx-yellow),var(--rx-blue)) }
+
+    /* Tools column */
+    .tools{ display:flex; flex-direction:column; gap:12px }
+    .tool{ display:flex; gap:12px; align-items:center }
+    .tool img{ width:96px; border-radius:10px; padding:6px; background:#fff; border:1px solid rgba(12,32,56,0.03); box-shadow:0 12px 40px rgba(12,32,56,0.03) }
+
+    /* checklist */
+    .checklist{ display:flex; flex-direction:column; gap:8px; margin-top:12px }
+    .check-item{ display:flex; gap:10px; align-items:center; padding:8px; border-radius:8px; background:#fbfdff; border:1px solid rgba(12,32,56,0.03) }
+    .check-item input{ width:18px; height:18px }
+
+    /* footer */
+    footer{ text-align:center; color:var(--muted); padding:12px; border-radius:10px; border:1px solid var(--glass); background:#fbfdff }
+
+    @media (max-width:980px){
+      .hero{ grid-template-columns:1fr }
+      .main{ grid-template-columns:1fr }
+      .visual{ min-height:260px }
+    }
+  </style>
+</head>
+<body>
+  <div class="site">
+    <nav aria-label="Main navigation" class="nav">
+      <a href="index.html">Home</a>
+      <a href="jazz.html">Jazz</a>
+      <a href="history.html">History</a>
+      <a href="impact.html">Examples</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="gunpla.html" class="active">Gunpla</a>
+    </nav>
+
+    <header class="hero" aria-labelledby="page-title">
+      <div>
+        <div id="page-title" class="title">Why I Love Building Gunpla</div>
+        <p class="lead">It’s the mixture of hands-on craft and creative choices. From careful sanding to layered candy finishes, every step is an opportunity to learn and make something personal.</p>
+
+        <div class="accent-row" style="margin-top:12px">
+          <div class="chip">Spraycraft</div>
+          <div class="chip">Weathering</div>
+          <div class="chip">Decals</div>
+          <div class="chip">Photography</div>
+        </div>
+
+        <div style="margin-top:12px;color:var(--muted)">Explore techniques, materials, step-by-step workflows, and practical tips — organized for quick reading and deep learning.</div>
+      </div>
+
+      <div class="visual" role="img" aria-label="Stylized model preview">
+        <!-- SVG decorative model -->
+        <svg class="model" viewBox="0 0 360 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g transform="translate(20,10)">
+            <rect x="80" y="40" rx="14" width="200" height="100" fill="#fff" stroke="rgba(12,32,56,0.06)"/>
+            <rect x="108" y="56" width="144" height="48" rx="8" fill="#173db8" />
+            <rect x="160" y="104" width="40" height="22" rx="4" fill="#ff3b3b" />
+            <rect x="116" y="108" width="24" height="10" rx="2" fill="#ffd100"/>
+            <rect x="220" y="108" width="24" height="10" rx="2" fill="#ffd100"/>
+            <g transform="translate(138,6)">
+              <rect x="0" y="0" width="84" height="52" rx="10" fill="#fff" stroke="rgba(12,32,56,0.06)"/>
+              <polygon points="42,-8 52,10 32,10" fill="#ffd100"/>
+            </g>
+            <rect x="96" y="160" width="56" height="140" rx="12" fill="#fff" stroke="rgba(12,32,56,0.04)"/>
+            <rect x="208" y="160" width="56" height="140" rx="12" fill="#fff" stroke="rgba(12,32,56,0.04)"/>
+            <g id="panelLines" stroke="rgba(12,32,56,0.85)" stroke-width="1" opacity="0.9">
+              <path d="M92,200 q68 -20 176 0" fill="none"/>
+              <path d="M92,240 q68 -20 176 0" fill="none"/>
+              <path d="M176,140 v180" fill="none"/>
+            </g>
+            <rect x="80" y="40" width="200" height="260" rx="14" fill="transparent" id="candyOverlay" opacity="0"/>
+            <path d="M74,34 h212 v268 h-212 z" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2" opacity="0.06" style="mix-blend-mode:screen"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="float-deco" aria-hidden="true"></div>
+    </header>
+
+    <div class="main">
+      <main>
+        <section class="card">
+          <h2 class="section-title">Why I Keep Building</h2>
+
+          <div class="grid-2">
+            <div class="tile">Hands-on craft — the feel of files, sanding, and an airbrush in hand is meditative.</div>
+            <div class="tile">Creative choices — color, weathering style, and decals define personality.</div>
+            <div class="tile">Learning — each kit teaches a new trick or technique.</div>
+            <div class="tile">Community — process photos and threads improve craft and encourage sharing.</div>
+          </div>
+
+          <div class="detail" style="margin-top:18px">
+            <h4>Materials & Setup</h4>
+            <p class="muted">Essentials: dual-action airbrush, compressor, quality primer, acrylic/lacquer paints, sanding set (400–2000 grit), masking tape, decal solutions, and a good lamp. Safety: ventilate, use respirators for spray work, and keep thinners away from flames.</p>
+          </div>
+
+          <div class="detail" style="margin-top:12px">
+            <h4>Favorite Finishes</h4>
+            <ul style="color:var(--muted)">
+              <li><strong>Matte:</strong> realistic military or worn look</li>
+              <li><strong>Satin:</strong> balanced sheen for display</li>
+              <li><strong>Gloss + Candy:</strong> metallic base + tinted clear for depth</li>
+              <li><strong>Weathered:</strong> washes, pigments, and chipping</li>
+            </ul>
+          </div>
+
+          <div class="acc" style="margin-top:12px">
+            <div class="acc-item open">
+              <div class="acc-head">Airbrush tips <span>▾</span></div>
+              <div class="acc-body">
+                <p>Keep consistent distance (~10–20 cm), keep the gun moving, and use multiple thin passes. Clean thoroughly between colors and always test spray on scrap.</p>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <div class="acc-head">Masking tips <span>▾</span></div>
+              <div class="acc-body">
+                <p>Use high-quality low-tack tape, press edges firmly, and leave the tape on until the paint is fully cured to avoid lifting.</p>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <div class="acc-head">Weathering recipes <span>▾</span></div>
+              <div class="acc-body">
+                <p>Simple wash: dark enamel thinned heavily; apply to recesses and wick away excess. Pigments: mix with water/alcohol binder; dab and fix with matte sealer. Chipping: sponge or hairspray base-coat method for realistic edges.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" style="margin-top:18px">
+          <h2 class="section-title">Detailed Workflow</h2>
+
+          <div class="detail">
+            <h4>Step-by-step</h4>
+            <ol style="color:var(--muted)">
+              <li><strong>Prep</strong> — remove sprues carefully, deburr and test-fit parts.</li>
+              <li><strong>Prime</strong> — use light coats, inspect for seams and imperfections.</li>
+              <li><strong>Sanding</strong> — work up through grits; wet-sanding for a glass finish.</li>
+              <li><strong>Base coats</strong> — thin paint 1.5–2.5x depending on brand; multiple passes.</li>
+              <li><strong>Mask & detail</strong> — crisp color separations and panel accents.</li>
+              <li><strong>Decals</strong> — gloss base -> set -> sol -> seal -> final topcoat.</li>
+              <li><strong>Photo & display</strong> — lighting, backdrop, and composition make the finish sing.</li>
+            </ol>
+          </div>
+
+          <div style="margin-top:12px" class="detail">
+            <h4>Photography Tips</h4>
+            <ul style="color:var(--muted)">
+              <li>Use soft directional light (softbox) to show finish without harsh reflections.</li>
+              <li>Neutral background (gray/black/white) keeps focus on the model.</li>
+              <li>Use tripod and small aperture (f/8–f/11) for sharp detail.</li>
+            </ul>
+          </div>
+        </section>
+      </main>
+
+      <aside class="card">
+        <h2 class="section-title">Tools, Parts & Checklist</h2>
+
+        <div class="tools">
+          <div class="tool"><img src="assets/airbrush.png" alt="airbrush"><div><strong>Airbrush</strong><div style="color:var(--muted)">Dual-action, 0.2–0.3mm nozzle.</div></div></div>
+          <div class="tool"><img src="assets/gunpla-shield.png" alt="shield"><div><strong>Decals</strong><div style="color:var(--muted)">Micro Set & Sol for conforming.</div></div></div>
+          <div class="tool"><img src="assets/gundam.png" alt="gundam"><div><strong>Kits</strong><div style="color:var(--muted)">Start with HG, move to MG for complexity.</div></div></div>
+        </div>
+
+        <div style="margin-top:12px">
+          <h4 style="color:var(--rx-blue); margin-bottom:8px;">Quick checklist</h4>
+          <div class="checklist" id="checklist">
+            <label class="check-item"><input type="checkbox" value="Airbrush & compressor"> Airbrush & compressor</label>
+            <label class="check-item"><input type="checkbox" value="Primer & paints"> Primer & paints</label>
+            <label class="check-item"><input type="checkbox" value="Sanding set"> Sanding set (400–2000)</label>
+            <label class="check-item"><input type="checkbox" value="Masking tape"> Masking tape</label>
+            <label class="check-item"><input type="checkbox" value="Decal solutions"> Micro Set / Micro Sol</label>
+            <label class="check-item"><input type="checkbox" value="Topcoats"> Topcoats (flat/satin/gloss)</label>
+          </div>
+
+          <div style="display:flex; gap:8px; margin-top:10px">
+            <button id="copyList" class="btn-ghost" style="padding:8px 12px; border-radius:10px; font-weight:700">Copy checklist</button>
+            <button id="printList" class="btn-ghost" style="padding:8px 12px; border-radius:10px; font-weight:700">Print checklist</button>
+          </div>
+
+        </div>
+
+        <div style="margin-top:14px" class="detail">
+          <h4>Common mistakes & fixes</h4>
+          <ul style="color:var(--muted)">
+            <li>Thick coats -> runs. Fix: sand & re-prime, thin paint more.</li>
+            <li>Silvering under decals -> use gloss base before decals.</li>
+            <li>Uneven masking -> use better tape and burnish edges.</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="footer">Deep, playful, and practical — a single page to celebrate the craft, encourage experimentation, and provide the essential tips that make building Gunpla rewarding.</footer>
+  </div>
+
+  <script>
+    // Accordion functionality
+    document.querySelectorAll('.acc-head').forEach(head=>{
+      head.addEventListener('click', ()=> {
+        const item = head.parentElement;
+        item.classList.toggle('open');
+      });
+    });
+
+    // Checklist copy / print
+    const copyBtn = document.getElementById('copyList');
+    const printBtn = document.getElementById('printList');
+    const checklist = document.getElementById('checklist');
+
+    copyBtn.addEventListener('click', ()=>{
+      const items = Array.from(checklist.querySelectorAll('input[type=checkbox]')).map(cb => (cb.checked ? '[x] ' : '[ ] ') + cb.parentElement.textContent.trim());
+      const text = 'Gunpla checklist:\n' + items.join('\n');
+      navigator.clipboard?.writeText(text).then(()=> flash('Checklist copied to clipboard'), ()=> flash('Could not copy'));
+    });
+
+    printBtn.addEventListener('click', ()=>{
+      // open print window containing checklist
+      const items = Array.from(checklist.querySelectorAll('input[type=checkbox]')).map(cb => (cb.checked ? '☑ ' : '☐ ') + cb.parentElement.textContent.trim());
+      const html = `<html><head><title>Gunpla checklist</title><style>body{font-family:Inter,system-ui;color:#0b2433;padding:20px}li{margin:8px 0}</style></head><body><h2>Gunpla checklist</h2><ul>${items.map(i=>'<li>'+i+'</li>').join('')}</ul></body></html>`;
+      const w = window.open('', '_blank');
+      w.document.write(html);
+      w.document.close();
+      w.print();
+    });
+
+    // small toast helper
+    let tt;
+    function flash(msg){
+      let el = document.getElementById('site-toast');
+      if (!el){
+        el = document.createElement('div'); el.id='site-toast';
+        el.style.cssText = 'position:fixed;right:18px;bottom:18px;background:linear-gradient(90deg,rgba(23,61,184,0.12),rgba(255,209,0,0.06));color:#07223b;padding:10px 14px;border-radius:10px;z-index:9999;font-weight:700';
+        document.body.appendChild(el);
+      }
+      el.textContent = msg; el.style.opacity = '1';
+      clearTimeout(tt);
+      tt = setTimeout(()=> el.style.opacity = '0', 1400);
+    }
+
+    // gentle entrance animation
+    window.addEventListener('load', ()=> {
+      document.querySelectorAll('.tile, .detail, .tool, .step').forEach((el,i)=> {
+        el.style.opacity=0; el.style.transform='translateY(12px)';
+        setTimeout(()=> { el.style.transition='opacity .6s ease, transform .6s ease'; el.style.opacity=1; el.style.transform='translateY(0)'; }, i*40);
+      });
+    });
+  </script>
+</body>
+</html>

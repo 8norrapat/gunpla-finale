@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Examples of Jazz — Spotify Links</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{ --bg-dark:#02061a; --bg-mid:#08326b; --accent:#66e0ff; --accent-2:#2f6bff; --muted:#bfeaff; --glass:rgba(255,255,255,0.03);
+      --card-radius:18px; --glow:0 28px 90px rgba(30,110,255,0.12);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{ background: radial-gradient(700px 300px at 8% 12%, rgba(60,140,255,0.06), transparent 6%),
+      radial-gradient(600px 260px at 92% 70%, rgba(90,200,255,0.03), transparent 6%),
+      linear-gradient(180deg,var(--bg-dark) 0%, var(--bg-mid) 100%);
+      color:var(--muted); font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Arial;
+      -webkit-font-smoothing:antialiased; overflow-x:hidden; padding-bottom:48px;
+    }
+    .navbar{ display:flex; justify-content:center; gap:20px; background: linear-gradient(180deg, rgba(2,6,30,0.98), rgba(2,6,40,0.9));
+      padding:22px 0 14px; position:sticky; top:0; z-index:40; box-shadow: 0 12px 40px rgba(2,18,60,0.28); flex-wrap:wrap;
+    }
+    .navbar a{ color:#e9fbff; text-decoration:none; padding:10px 12px; border-radius:14px; font-weight:600; letter-spacing:.2px; transition: all .18s ease; font-size:.95rem; }
+    .navbar a.active{ background: linear-gradient(90deg,var(--accent) 10%, var(--accent-2) 100%); color:#04112a; box-shadow: var(--glow) }
+    .navbar a:hover{ transform: translateY(-3px); box-shadow: var(--glow); background: linear-gradient(90deg,var(--accent) 10%, var(--accent-2) 100%); color:#04112a }
+    .examples-root{ min-height:86vh; display:flex; flex-direction:column; align-items:center; padding:44px 20px; gap:18px }
+    .examples-header{ text-align:center; max-width:980px; margin-bottom:6px }
+    .examples-header h1{ font-family:'Playfair Display', serif; color:var(--accent); font-size:2.4rem; letter-spacing:.4px;
+      text-shadow: 0 10px 48px rgba(2,22,64,0.36); margin-bottom:8px;
+    }
+    .examples-header .subtitle{ color:#cfefff; max-width:860px; margin:0 auto; font-size:1rem; line-height:1.6 }
+    .tracks-grid{ width:100%; max-width:1240px; display:grid; grid-template-columns: repeat(3, 1fr); gap:22px; margin-top:18px; align-items:start; }
+    .track-card{ background: linear-gradient(180deg, rgba(8,16,34,0.86), rgba(6,12,26,0.96)); border-radius: var(--card-radius);
+      padding:18px; border: 1px solid rgba(90,180,255,0.06); box-shadow: 0 26px 90px rgba(6,18,46,0.58), inset 0 1px 0 rgba(255,255,255,0.02);
+      display:flex; flex-direction:column; gap:12px; transition: transform .18s cubic-bezier(.2,.9,.25,1), box-shadow .18s;
+      position:relative; overflow:visible; perspective:900px;
+    }
+    .track-card::before{ content:""; position:absolute; inset:-1px; z-index:0; border-radius:inherit;
+      background: linear-gradient(120deg, rgba(102,224,255,0.03), rgba(52,120,255,0.02)); pointer-events:none;
+    }
+    .track-card:hover{ transform: translateY(-12px) rotateX(2deg) scale(1.01); box-shadow: 0 48px 140px rgba(40,110,255,0.14) }
+    .card-top{ display:flex; gap:14px; align-items:center; z-index:2 }
+    .art-wrap{ width:100px; height:100px; border-radius:12px; overflow:hidden; box-shadow: 0 10px 40px rgba(20,60,120,0.22); border:1px solid rgba(255,255,255,0.02) }
+    .art{ display:block; width:100%; height:100%; object-fit:cover }
+    .track-meta{ flex:1; position:relative; z-index:2 }
+    .track-meta h2{ font-size:1.08rem; color:#eefcff; margin:0; font-weight:700 }
+    .artist{ color:#9fdfff; font-size:.92rem; margin-top:3px }
+    .badge{ position:absolute; right:0; top:-6px; background:linear-gradient(90deg,var(--accent) 10%,var(--accent-2) 100%); color:#04112a; padding:6px 8px; border-radius:8px; font-weight:700; box-shadow:0 8px 30px rgba(40,110,255,0.12) }
+    .embed-wrap{ margin-top:10px; border-radius:12px; overflow:hidden; min-height:84px;
+      background: linear-gradient(180deg, rgba(7,12,22,0.6), rgba(6,10,20,0.7)); border:1px solid rgba(90,170,255,0.04);
+      box-shadow: inset 0 6px 20px rgba(20,60,120,0.03);
+    }
+    .embed-wrap iframe{ display:block; width:100%; border:0; height:352px; border-radius:12px; }
+    .card-actions{ display:flex; gap:10px; align-items:center; margin-top:6px; z-index:2; flex-wrap:wrap }
+    .spotify-link{ display:inline-flex; align-items:center; gap:10px; padding:10px 14px; background: linear-gradient(90deg,#0f3a7a 0%, #174b97 100%); color:#e6fbff; text-decoration:none; border-radius:10px; font-weight:700; font-size:.94rem; box-shadow: 0 10px 36px rgba(6,30,70,0.46); transition: transform .12s, box-shadow .12s; }
+    .spotify-link:hover{ transform: translateY(-4px); box-shadow: 0 20px 50px rgba(24,110,210,0.18) }
+    .card-actions.bottom{ justify-content:flex-end }
+    @media (max-width:1100px){ .tracks-grid{ grid-template-columns: repeat(2, 1fr) } }
+    @media (max-width:700px){ .tracks-grid{ grid-template-columns: 1fr; padding: 0 12px } .examples-header h1{ font-size:1.6rem } .art-wrap{ width:86px; height:86px } .embed-wrap iframe{ height:250px } }
+  </style>
+</head>
+<body>
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="jazz.html">Jazz</a>
+    <a href="history.html">History</a>
+    <a href="impact.html" class="active">Examples</a>
+    <a href="quiz.html">Quiz</a>
+    <a href="gunpla.html">Gunpla</a>
+  </nav>
+
+  <main class="examples-root" role="main">
+    <header class="examples-header">
+      <h1>Examples of Jazz</h1>
+      <p class="subtitle">A curated trio — embedded Spotify players for quick listening. Laufey — "From the Start", Frank Sinatra — "My Way", and Blue Giant — "First Note". Enjoy.</p>
+    </header>
+
+    <section class="tracks-grid" aria-live="polite">
+
+      <article class="track-card" aria-labelledby="t1-title">
+        <div class="card-top">
+          <div class="art-wrap" aria-hidden="true">
+            <svg class="art" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+              <defs>
+                <linearGradient id="lg1" x1="0" x2="1"><stop offset="0" stop-color="#86ddff"/><stop offset="1" stop-color="#2b6bff"/></linearGradient>
+                <filter id="b1"><feGaussianBlur stdDeviation="4" /></filter>
+              </defs>
+              <rect width="200" height="200" rx="18" fill="url(#lg1)"/>
+              <g filter="url(#b1)" opacity="0.12"><circle cx="40" cy="60" r="28" fill="#fff"/><circle cx="160" cy="40" r="20" fill="#fff"/></g>
+            </svg>
+          </div>
+
+          <div class="track-meta">
+            <h2 id="t1-title">From the Start</h2>
+            <p class="artist">Laufey</p>
+            <div class="badge">1</div>
+          </div>
+        </div>
+
+        <div class="embed-wrap">
+          <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/43iIQbw5hx986dUEZbr3eN?utm_source=generator" width="100%" height="352" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="From the Start — Laufey"></iframe>
+        </div>
+
+        <div class="card-actions bottom">
+          <a class="spotify-link" href="https://open.spotify.com/track/43iIQbw5hx986dUEZbr3eN" target="_blank" rel="noopener">Open in Spotify</a>
+        </div>
+      </article>
+
+      <article class="track-card" aria-labelledby="t2-title">
+        <div class="card-top">
+          <div class="art-wrap" aria-hidden="true">
+            <svg class="art" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+              <defs>
+                <linearGradient id="lg2" x1="0" x2="1"><stop offset="0" stop-color="#ffd88d"/><stop offset="1" stop-color="#ff7a73"/></linearGradient>
+                <filter id="b2"><feGaussianBlur stdDeviation="3" /></filter>
+              </defs>
+              <rect width="200" height="200" rx="18" fill="url(#lg2)"/>
+              <g filter="url(#b2)" opacity="0.13"><circle cx="150" cy="150" r="30" fill="#fff"/></g>
+            </svg>
+          </div>
+
+          <div class="track-meta">
+            <h2 id="t2-title">My Way</h2>
+            <p class="artist">Frank Sinatra</p>
+            <div class="badge">2</div>
+          </div>
+        </div>
+
+        <div class="embed-wrap">
+          <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/2YkIDPL5lGhRhomCq4S2RO?utm_source=generator" width="100%" height="352" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="My Way — Frank Sinatra"></iframe>
+        </div>
+
+        <div class="card-actions bottom">
+          <a class="spotify-link" href="https://open.spotify.com/track/2YkIDPL5lGhRhomCq4S2RO" target="_blank" rel="noopener">Open in Spotify</a>
+        </div>
+      </article>
+
+      <article class="track-card" aria-labelledby="t3-title">
+        <div class="card-top">
+          <div class="art-wrap" aria-hidden="true">
+            <svg class="art" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+              <defs>
+                <linearGradient id="lg3" x1="0" x2="1"><stop offset="0" stop-color="#9be78f"/><stop offset="1" stop-color="#3ab6ff"/></linearGradient>
+                <filter id="b3"><feGaussianBlur stdDeviation="3.5" /></filter>
+              </defs>
+              <rect width="200" height="200" rx="18" fill="url(#lg3)"/>
+              <g filter="url(#b3)" opacity="0.12"><circle cx="80" cy="60" r="24" fill="#fff"/></g>
+            </svg>
+          </div>
+
+          <div class="track-meta">
+            <h2 id="t3-title">First Note</h2>
+            <p class="artist">Blue Giant</p>
+            <div class="badge">3</div>
+          </div>
+        </div>
+
+        <div class="embed-wrap">
+          <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/03IckTW2qNaWUvrOHtuYhL?utm_source=generator" width="100%" height="352" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="First Note — Blue Giant"></iframe>
+        </div>
+
+        <div class="card-actions bottom">
+          <a class="spotify-link" href="https://open.spotify.com/track/03IckTW2qNaWUvrOHtuYhL" target="_blank" rel="noopener">Open in Spotify</a>
+        </div>
+      </article>
+
+    </section>
+  </main>
+</body>
+</html>

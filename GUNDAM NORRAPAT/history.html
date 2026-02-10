@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>History of Jazz — Timeline</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{ --bg-dark:#04051a; --bg-mid:#08306a; --accent:#66e0ff; --muted:#bfeaff; --card-radius:16px; --glow:0 18px 60px rgba(40,110,255,0.12); }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{ background: radial-gradient(700px 300px at 10% 12%, rgba(60,140,255,0.04), transparent 6%),
+      linear-gradient(180deg,var(--bg-dark) 0%, var(--bg-mid) 100%);
+      color:var(--muted); font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Arial; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+    }
+    .navbar{ display:flex; justify-content:center; gap:20px; background: linear-gradient(180deg, rgba(2,6,30,0.96), rgba(2,6,40,0.9));
+      padding:18px 0; position:sticky; top:0; z-index:40; box-shadow:0 8px 36px rgba(2,18,60,0.28); flex-wrap:wrap;
+    }
+    .navbar a{ color:#e9fbff; text-decoration:none; padding:10px 12px; border-radius:12px; font-weight:600; font-size:.95rem; }
+    .navbar a.active{ background: linear-gradient(90deg,var(--accent) 10%, #2f6bff 100%); color:#04112a; box-shadow: var(--glow) }
+    .navbar a:hover{ transform:translateY(-3px); background: linear-gradient(90deg,var(--accent) 10%, #2f6bff 100%); color:#04112a }
+    .history-root{ min-height:86vh; display:flex; flex-direction:column; align-items:center; padding:44px 20px; gap:20px }
+    .history-hero{ text-align:center; max-width:980px }
+    .history-hero h1{ font-family:'Playfair Display',serif; color:var(--accent); font-size:2.3rem; margin-bottom:8px; text-shadow:0 10px 40px rgba(2,22,64,0.28) }
+    .history-hero .subtitle{ color:#cfefff; max-width:840px; margin:0 auto; font-size:1rem; line-height:1.6 }
+    .timeline{ width:min(1080px,96%); margin-top:6px }
+    .timeline h2{ color:var(--accent); font-family:'Playfair Display', serif; font-size:1.4rem; margin-bottom:14px }
+    .timeline-list{ list-style:none; padding:0; margin:0; position:relative }
+    .timeline-list::before{ content:""; position:absolute; left:48px; top:8px; bottom:8px; width:3px;
+      background: linear-gradient(180deg, rgba(102,224,255,0.12), rgba(52,120,255,0.08)); border-radius:2px; transform:translateX(-50%);
+    }
+    .timeline-item{ display:flex; gap:20px; margin:18px 0; align-items:flex-start; }
+    .timeline-marker{ width:96px; flex-shrink:0; text-align:right; font-weight:700; color:#cfefff; font-size:.95rem; padding-right:12px; position:relative; }
+    .timeline-marker::after{ content:""; position:absolute; right:-24px; top:10px; width:14px; height:14px;
+      background: linear-gradient(90deg,var(--accent) 10%, #2f6bff 100%); border-radius:50%; box-shadow: 0 6px 20px rgba(40,110,255,0.12);
+    }
+    .timeline-body{ background: linear-gradient(180deg, rgba(5,12,28,0.86), rgba(6,12,34,0.94)); padding:16px; border-radius:12px;
+      border:1px solid rgba(255,255,255,0.02); box-shadow: 0 16px 60px rgba(6,18,46,0.48); flex:1;
+    }
+    .timeline-body h3{ margin:0; color:#eefcff; font-size:1.05rem }
+    .timeline-body p{ color:#dff6ff; margin:8px 0 0 0; line-height:1.5; font-size:.98rem }
+    .more{ margin-top:12px; background: rgba(255,255,255,0.02); padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,0.02) }
+    .more summary{ cursor:pointer; font-weight:700; color:#bfefff; outline:none }
+    .more p{ margin:10px 0 0 0; color:#dff6ff; line-height:1.5 }
+    .history-footer{ max-width:980px; text-align:center; color:#bfefff; margin-top:12px }
+    @media (max-width:920px){ .timeline-list::before{ left:22px } .timeline-item{ flex-direction:column; gap:10px }
+      .timeline-marker{ text-align:left; padding-right:0 } .timeline-marker::after{ left:6px; right:auto; top:6px }
+    }
+    @media (max-width:640px){ .history-hero h1{ font-size:1.6rem } .timeline-body p{ font-size:.95rem } }
+  </style>
+</head>
+<body>
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="jazz.html">Jazz</a>
+    <a href="history.html" class="active">History</a>
+    <a href="impact.html">Examples</a>
+    <a href="quiz.html">Quiz</a>
+    <a href="gunpla.html">Gunpla</a>
+  </nav>
+
+  <main class="history-root" role="main">
+    <header class="history-hero">
+      <h1>Heritage of Jazz — A Timeline</h1>
+      <p class="subtitle">A timeline of major jazz eras.</p>
+    </header>
+
+    <section class="timeline" aria-labelledby="timeline-title">
+      <h2 id="timeline-title">Key Eras & Moments</h2>
+
+      <ol class="timeline-list">
+
+        <li class="timeline-item">
+          <div class="timeline-marker">1900s–1920s</div>
+          <div class="timeline-body">
+            <h3>Early Jazz — New Orleans</h3>
+            <p>Jazz began in New Orleans as a fusion of African rhythms, brass-band tradition, blues, and ragtime. It introduced collective improvisation and community music-making.</p>
+            <details class="more"><summary>Notable figures</summary><p>Buddy Bolden, Jelly Roll Morton, Louis Armstrong (emerging late 1910s—1920s).</p></details>
+          </div>
+        </li>
+
+        <li class="timeline-item">
+          <div class="timeline-marker">1930s–1940s</div>
+          <div class="timeline-body">
+            <h3>Swing & Big Band</h3>
+            <p>Big bands and swing rhythms dominated dance halls. Arrangements became more elaborate and jazz reached mainstream audiences via radio and records.</p>
+            <details class="more"><summary>Notable figures</summary><p>Duke Ellington, Count Basie, Benny Goodman, Ella Fitzgerald.</p></details>
+          </div>
+        </li>
+
+        <li class="timeline-item">
+          <div class="timeline-marker">1940s–1950s</div>
+          <div class="timeline-body">
+            <h3>Bebop & Modern Jazz</h3>
+            <p>Bebop focused on small combos, virtuosic solos, and harmonic complexity — a turning point toward listening and artistry rather than dancing.</p>
+            <details class="more"><summary>Notable figures</summary><p>Charlie Parker, Dizzy Gillespie, Thelonious Monk.</p></details>
+          </div>
+        </li>
+
+        <li class="timeline-item">
+          <div class="timeline-marker">1950s–1960s</div>
+          <div class="timeline-body">
+            <h3>Cool, Modal, & Hard Bop</h3>
+            <p>Multiple directions: cool jazz with relaxed tones, modal jazz emphasizing scales, and hard bop blending gospel and blues influences.</p>
+            <details class="more"><summary>Notable figures</summary><p>Miles Davis, John Coltrane, Chet Baker.</p></details>
+          </div>
+        </li>
+
+        <li class="timeline-item">
+          <div class="timeline-marker">1970s–Today</div>
+          <div class="timeline-body">
+            <h3>Fusion, Global Jazz & Contemporary</h3>
+            <p>Electric instruments, rock and world-music elements, and technological advances expanded jazz's vocabulary. Contemporary artists continue to blend genres.</p>
+            <details class="more"><summary>Notable figures</summary><p>Miles Davis (electric era), Herbie Hancock, modern global artists and cross-genre collaborators.</p></details>
+          </div>
+        </li>
+
+      </ol>
+    </section>
+
+    <footer class="history-footer">
+      <p>Want a printable version of this timeline? I can export these cards into a clean PDF ready for printing or sharing.</p>
+    </footer>
+  </main>
+</body>
+</html>

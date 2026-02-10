@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jazz Quiz — Why I Love Jazz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{ --bg-dark:#02061a; --bg-mid:#08326b; --accent:#66e0ff; --accent-2:#2f6bff; --muted:#bfeaff; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{ min-height:100vh;
+      background: radial-gradient(700px 300px at 10% 12%, rgba(60,140,255,0.06), transparent 6%),
+        linear-gradient(180deg,var(--bg-dark),var(--bg-mid));
+      font-family:'Inter',system-ui; color:var(--muted);
+    }
+    .navbar{ display:flex; justify-content:center; gap:20px; padding:18px 0; background:rgba(2,6,30,0.96); flex-wrap:wrap; }
+    .navbar a{ color:#e9fbff; text-decoration:none; padding:10px 12px; border-radius:12px; font-weight:600; font-size:.95rem; }
+    .navbar a.active, .navbar a:hover{ background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#04112a; }
+    .quiz-root{ display:flex; flex-direction:column; align-items:center; padding:40px 20px; gap:22px; }
+    .quiz-header{ text-align:center; max-width:800px; }
+    .quiz-header h1{ font-family:'Playfair Display',serif; color:var(--accent); font-size:2.3rem; }
+    .subtitle{ color:#cfefff; margin-top:8px; }
+    .quiz-card{ width:100%; max-width:700px; background:linear-gradient(180deg,rgba(8,16,34,0.9),rgba(6,12,26,0.95));
+      border-radius:18px; padding:26px; box-shadow:0 30px 100px rgba(6,18,46,0.6);
+    }
+    .quiz-top{ display:flex; justify-content:space-between; font-weight:700; margin-bottom:14px; }
+    #question{ color:#eefcff; font-size:1.2rem; margin-bottom:18px; }
+    .answers{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .answer-btn{ padding:14px; border-radius:14px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05);
+      color:#e9fbff; font-weight:600; cursor:pointer; transition:all .15s;
+    }
+    .answer-btn:hover{ transform:translateY(-4px); }
+    .answer-btn.correct{ background:linear-gradient(90deg,#7cffb2,#2fdb8f); color:#04112a; }
+    .answer-btn.wrong{ background:linear-gradient(90deg,#ff7a7a,#ff3b3b); color:#04112a; }
+    .btn-primary{ margin-top:18px; padding:12px 20px; border-radius:999px; border:none;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2)); font-weight:700; cursor:pointer;
+    }
+    .hidden{ display:none }
+    .quiz-result{ text-align:center; }
+    .quiz-result h2{ font-family:'Playfair Display',serif; color:var(--accent); }
+    @media (max-width:980px){ .answers{ grid-template-columns:1fr } }
+  </style>
+</head>
+<body>
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="jazz.html">Jazz</a>
+    <a href="history.html">History</a>
+    <a href="impact.html">Examples</a>
+    <a href="quiz.html" class="active">Quiz</a>
+    <a href="gunpla.html">Gunpla</a>
+  </nav>
+
+  <main class="quiz-root" role="main">
+    <header class="quiz-header">
+      <h1>Why I Love Jazz — Quiz</h1>
+      <p class="subtitle">How well you understand why jazz means so much to me.</p>
+    </header>
+
+    <section class="quiz-card">
+      <div class="quiz-top">
+        <span id="progress">Question 1 / 10</span>
+        <span id="score">Score: 0</span>
+      </div>
+
+      <h2 id="question">Question text</h2>
+
+      <div class="answers" id="answers"></div>
+
+      <button id="nextBtn" class="btn-primary hidden">Next Question</button>
+    </section>
+
+    <section class="quiz-result hidden" id="result">
+      <h2>Your Final Score</h2>
+      <p id="finalScore"></p>
+      <a href="quiz.html" class="btn-primary">Play Again</a>
+    </section>
+  </main>
+
+  <script>
+    const quiz = [
+      { q: "what jazz artist do you think I love the most", a: ["Laufey","Frank Sinatra","Louis Armstrong","Yussef Dayes"], correct: 0 },
+      { q: "What part of jazz do I enjoy the most?", a: [ "Perfect repetition", "Improvisation", "Loud volume", "Short songs" ], correct: 1 },
+      { q: "When do I usually listen to jazz?", a: ["In class ?","While reading ?","During the test ?","All the time"], correct: 3 },
+      { q: "What is exciting for me when listeing to jazz ?", a: [ "Every song sounds the same", "Each record tells a story", "It is very popular", "It is simple music" ], correct: 1 },
+      { q: "What format do I prefer for jazz?", a: ["Vinyl if I have money to by more","CD","Spotify","Radio"], correct: 1 },
+      { q: "What does jazz encourage ?", a: ["strict rules","improvising","silence","All of the above"], correct: 3 },
+      { q: "How does jazz make me feel?", a: [ "Bored", "Emotionally connected", "Confused", "Angry" ], correct: 1 },
+      { q: "What kind of listening is jazz for me?", a: ["Passive", "Active and focused", "Accidental", "Background noise"], correct: 0 },
+      { q: "Why do I replay jazz albums?", a: ["They never change", "They reveal new moments", "They are short", "They are loud"], correct: 1 },
+      { q: "Jazz is my hobby because…", a: ["It reminds me of my grandparents ", "It expresses feeling and freedom", "It is emotional", "All of the above"], correct: 3 }
+    ];
+
+    let index = 0;
+    let score = 0;
+
+    const questionEl = document.getElementById("question");
+    const answersEl = document.getElementById("answers");
+    const progressEl = document.getElementById("progress");
+    const scoreEl = document.getElementById("score");
+    const nextBtn = document.getElementById("nextBtn");
+    const resultEl = document.getElementById("result");
+    const finalScoreEl = document.getElementById("finalScore");
+
+    function loadQuestion(){
+      const q = quiz[index];
+      questionEl.textContent = q.q;
+      answersEl.innerHTML = "";
+      progressEl.textContent = `Question ${index + 1} / ${quiz.length}`;
+
+      q.a.forEach((text, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = text;
+        btn.className = "answer-btn";
+        btn.onclick = () => selectAnswer(btn, i);
+        answersEl.appendChild(btn);
+      });
+    }
+
+    function selectAnswer(btn, i){
+      const correct = quiz[index].correct;
+      [...answersEl.children].forEach(b => b.disabled = true);
+
+      if(i === correct){
+        btn.classList.add("correct");
+        score++;
+        scoreEl.textContent = `Score: ${score}`;
+      } else {
+        btn.classList.add("wrong");
+        answersEl.children[correct].classList.add("correct");
+      }
+      nextBtn.classList.remove("hidden");
+    }
+
+    nextBtn.onclick = () => {
+      index++;
+      nextBtn.classList.add("hidden");
+
+      if(index < quiz.length){
+        loadQuestion();
+      } else {
+        document.querySelector(".quiz-card").classList.add("hidden");
+        resultEl.classList.remove("hidden");
+        finalScoreEl.textContent = `You scored ${score} / ${quiz.length} 🎷`;
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', loadQuestion);
+  </script>
+</body>
+</html>
