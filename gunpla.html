@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gunpla Building - My Hobby</title>
+  <meta name="description" content="A comprehensive guide to my Gunpla building hobby — techniques, tools, finishes, weathering recipes, photography tips, and printable checklist." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #fbfdff;
+      --card-grad: linear-gradient(180deg, #ffffff, #f6fbff);
+      --ink: #0b2433;
+      --muted: #647986;
+      --primary: #173db8;
+      --accent-red: #ff3b3b;
+      --accent-yellow: #ffd100;
+      --glass: rgba(12, 32, 56, 0.06);
+      --radius: 16px;
+      --max: 1300px;
+      --soft: 0 18px 60px rgba(12, 32, 56, 0.06);
+      --pop: 0 28px 120px rgba(12, 32, 56, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body { height: 100%; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes barrelRoll { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      background: radial-gradient(1000px 360px at 6% 8%, rgba(23, 61, 184, 0.035), transparent 8%), var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      padding: 28px;
+      display: flex;
+      justify-content: center;
+    }
+
+    body.barrel-roll { animation: barrelRoll 1s ease-in-out; }
+
+    .site {
+      width: min(var(--max), 96%);
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    /* Barrel Roll Button */
+    .barrel-btn {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent-red));
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: var(--pop);
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .barrel-btn:hover { transform: scale(1.15) rotate(20deg); box-shadow: 0 15px 50px rgba(23, 61, 184, 0.3); }
+
+    /* Navigation */
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--ink);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(12, 32, 56, 0.04);
+      transition: all 0.3s ease;
+    }
+
+    .nav a:hover { box-shadow: var(--soft); transform: translateY(-3px); }
+    .nav a.active { background: linear-gradient(90deg, var(--primary), var(--accent-red)); color: #fbfdff; box-shadow: var(--pop); }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 460px;
+      gap: 22px;
+      align-items: center;
+      padding: 32px;
+      border-radius: var(--radius);
+      background: var(--card-grad);
+      border: 1px solid var(--glass);
+      box-shadow: var(--soft);
+      position: relative;
+      overflow: visible;
+      animation: fadeIn 0.6s ease;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      color: var(--primary);
+      font-size: 2.4rem;
+      margin-bottom: 8px;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .accent-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--primary), var(--accent-red));
+      color: #fbfdff;
+      box-shadow: 0 12px 44px rgba(23, 61, 184, 0.06);
+      transition: all 0.3s ease;
+    }
+
+    .chip:hover { transform: translateY(-2px); box-shadow: 0 15px 50px rgba(23, 61, 184, 0.12); }
+
+    .visual {
+      border-radius: 12px;
+      background: #fff;
+      border: 1px solid var(--glass);
+      padding: 16px;
+      min-height: 340px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--pop);
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.25, 1);
+    }
+
+    .visual:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 35px 140px rgba(12, 32, 56, 0.12); }
+
+    .visual-content {
+      width: 100%;
+      max-width: 420px;
+      display: block;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .float-deco {
+      position: absolute;
+      right: -80px;
+      top: -60px;
+      width: 420px;
+      height: 420px;
+      filter: blur(36px);
+      background: conic-gradient(from 40deg, rgba(23, 61, 184, 0.04), rgba(255, 59, 59, 0.03), rgba(255, 209, 0, 0.02));
+      transform: rotate(-10deg);
+      pointer-events: none;
+    }
+
+    /* Main layout */
+    .main {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 22px;
+      align-items: start;
+      margin-top: 8px;
+    }
+
+    .card {
+      background: #fff;
+      padding: 18px;
+      border-radius: 12px;
+      border: 1px solid var(--glass);
+      box-shadow: var(--soft);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover { box-shadow: var(--pop); transform: translateY(-2px); }
+
+    .section-title {
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .tile {
+      background: linear-gradient(180deg, #ffffff, #fbfdff);
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(12, 32, 56, 0.03);
+      font-weight: 800;
+      color: #14323e;
+      transition: transform 0.22s, box-shadow 0.22s;
+    }
+
+    .tile:hover { transform: translateY(-8px); box-shadow: 0 30px 100px rgba(12, 32, 56, 0.06); }
+
+    .detail {
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: 10px;
+      background: #fff;
+      border: 1px solid rgba(12, 32, 56, 0.03);
+      transition: all 0.3s ease;
+    }
+
+    .detail:hover { border-color: rgba(23, 61, 184, 0.1); box-shadow: 0 8px 24px rgba(12, 32, 56, 0.04); }
+    .detail h4 { margin-bottom: 8px; color: var(--primary); }
+    .detail ul { color: var(--muted); padding-left: 20px; }
+    .detail li { margin: 6px 0; }
+    .detail ol { color: var(--muted); padding-left: 20px; }
+
+    /* Accordion */
+    .acc {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .acc-item {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(12, 32, 56, 0.04);
+      background: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .acc-item:hover { border-color: rgba(23, 61, 184, 0.15); }
+
+    .acc-head {
+      padding: 10px 12px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+
+    .acc-head:hover { background: rgba(23, 61, 184, 0.05); }
+
+    .acc-body {
+      padding: 0 12px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.45s, padding 0.35s;
+      color: var(--muted);
+    }
+
+    .acc-item.open .acc-body { padding: 12px; max-height: 420px; }
+
+    /* Checklist */
+    .checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding: 8px;
+      border-radius: 8px;
+      background: #fbfdff;
+      border: 1px solid rgba(12, 32, 56, 0.03);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .check-item:hover { background: rgba(23, 61, 184, 0.03); border-color: rgba(23, 61, 184, 0.1); transform: translateX(3px); }
+    .check-item input { width: 18px; height: 18px; cursor: pointer; }
+    .check-item input:checked + span { text-decoration: line-through; opacity: 0.5; }
+
+    .btn-primary {
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      border: none;
+      background: linear-gradient(90deg, var(--primary), var(--accent-red));
+      color: #fbfdff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover { transform: scale(1.05); box-shadow: var(--pop); }
+
+    .tool {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 10px;
+      border-radius: 8px;
+      background: #fbfdff;
+      border: 1px solid rgba(12, 32, 56, 0.03);
+      transition: all 0.3s ease;
+    }
+
+    .tool:hover { border-color: rgba(23, 61, 184, 0.1); transform: translateX(4px); }
+
+    .tool-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--accent-red));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fbfdff;
+      font-weight: 800;
+      font-size: 1.8rem;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--glass);
+      background: #fbfdff;
+    }
+
+    .toast {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      background: linear-gradient(90deg, rgba(23, 61, 184, 0.95), rgba(255, 59, 59, 0.95));
+      color: white;
+      padding: 14px 20px;
+      border-radius: 10px;
+      font-weight: 700;
+      box-shadow: var(--pop);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; }
+      .main { grid-template-columns: 1fr; }
+      .visual { min-height: 260px; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .barrel-btn { width: 48px; height: 48px; font-size: 1.3rem; top: 20px; right: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <button class="barrel-btn" onclick="doBarrelRoll()" title="Do a barrel roll!">🔄</button>
+
+  <div class="site">
+    <nav aria-label="Main navigation" class="nav">
+      <a href="index.html">Home</a>
+      <a href="history.html">history</a>
+      <a href="impact.html">impact</a>
+      <a href="jazz.html">jazz</a>
+      <a href="gunpla.html" class="active">Gunpla</a>
+    </nav>
+
+    <header class="hero" aria-labelledby="page-title">
+      <div>
+        <h1 id="page-title">Why I Love Building Gunpla</h1>
+        <p class="lead">It's the mixture of hands-on craft and creative choices. From careful sanding to layered finishes, every step is an opportunity to learn and make something personal.</p>
+
+        <div class="accent-row" style="margin-top:12px">
+          <div class="chip">Spraycraft</div>
+          <div class="chip">Weathering</div>
+          <div class="chip">Decals</div>
+          <div class="chip">Photography</div>
+        </div>
+
+        <div style="margin-top:12px; color:var(--muted)">Explore techniques, materials, step-by-step workflows, and practical tips — organized for quick reading and deep learning.</div>
+      </div>
+
+      <div class="visual" role="img" aria-label="Model building workspace preview">
+        <svg class="visual-content" viewBox="0 0 360 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="20" y="40" width="320" height="420" rx="12" fill="#fff" stroke="rgba(12,32,56,0.08)" stroke-width="2"/>
+          <rect x="40" y="60" width="280" height="140" rx="8" fill="#173db8" opacity="0.1"/>
+          <rect x="50" y="70" width="50" height="50" rx="6" fill="#173db8" opacity="0.6"/>
+          <rect x="120" y="70" width="50" height="50" rx="6" fill="#ff3b3b" opacity="0.6"/>
+          <rect x="190" y="70" width="50" height="50" rx="6" fill="#ffd100" opacity="0.6"/>
+          <rect x="260" y="70" width="50" height="50" rx="6" fill="#173db8" opacity="0.4"/>
+          <line x1="50" y1="140" x2="310" y2="140" stroke="rgba(12,32,56,0.1)" stroke-width="2"/>
+          <circle cx="90" cy="200" r="30" fill="#ff3b3b" opacity="0.3"/>
+          <circle cx="180" cy="220" r="25" fill="#173db8" opacity="0.3"/>
+          <circle cx="270" cy="210" r="28" fill="#ffd100" opacity="0.3"/>
+          <rect x="50" y="300" width="260" height="8" rx="4" fill="rgba(12,32,56,0.05)"/>
+          <rect x="50" y="300" width="180" height="8" rx="4" fill="linear-gradient(90deg,#173db8,#ff3b3b)"/>
+          <text x="180" y="370" text-anchor="middle" font-family="Inter" font-size="14" fill="#0b2433" font-weight="700">Building &amp; Crafting</text>
+          <text x="180" y="395" text-anchor="middle" font-family="Inter" font-size="12" fill="#647986">Premium detail work</text>
+          <path d="M 40 420 Q 180 380 320 420" stroke="#173db8" stroke-width="2" fill="none" opacity="0.2"/>
+        </svg>
+      </div>
+
+      <div class="float-deco" aria-hidden="true"></div>
+    </header>
+
+    <div class="main">
+      <main>
+        <section class="card">
+          <h2 class="section-title">Why I Keep Building</h2>
+
+          <div class="grid-2">
+            <div class="tile">Hands-on craft — the feel of tools and materials is meditative.</div>
+            <div class="tile">Creative choices — color, weathering style, and details define personality.</div>
+            <div class="tile">Learning — each kit teaches a new trick or technique.</div>
+            <div class="tile">Community — sharing progress and tips encourages improvement.</div>
+          </div>
+
+          <div class="detail" style="margin-top:18px">
+            <h4>Materials & Setup</h4>
+            <p style="color:var(--muted)">Essentials: dual-action airbrush, compressor, quality primer, acrylic/lacquer paints, sanding set (400–2000 grit), masking tape, decal solutions, and good lighting. Safety: ventilate, use respirators for spray work, and store thinners safely.</p>
+          </div>
+
+          <div class="detail" style="margin-top:12px">
+            <h4>Favorite Finishes</h4>
+            <ul>
+              <li><strong>Matte:</strong> realistic and worn look</li>
+              <li><strong>Satin:</strong> balanced sheen for display</li>
+              <li><strong>Gloss + Candy:</strong> metallic base + tinted clear for depth</li>
+              <li><strong>Weathered:</strong> washes, pigments, and chipping effects</li>
+            </ul>
+          </div>
+
+          <div class="acc" style="margin-top:12px">
+            <div class="acc-item open">
+              <div class="acc-head">Airbrush tips <span>▾</span></div>
+              <div class="acc-body">
+                <p>Keep consistent distance (~10–20 cm), keep the gun moving, and use multiple thin passes. Clean thoroughly between colors and always test spray on scrap materials.</p>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <div class="acc-head">Masking tips <span>▾</span></div>
+              <div class="acc-body">
+                <p>Use high-quality low-tack tape, press edges firmly, and leave the tape on until the paint is fully cured to avoid lifting edges.</p>
+              </div>
+            </div>
+
+            <div class="acc-item">
+              <div class="acc-head">Weathering recipes <span>▾</span></div>
+              <div class="acc-body">
+                <p>Simple wash: dark enamel thinned heavily; apply to recesses and wick away excess. Pigments: mix with water/alcohol binder; dab and fix with matte sealer. Chipping: sponge or hairspray base-coat method for realistic edges.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" style="margin-top:18px">
+          <h2 class="section-title">Detailed Workflow</h2>
+
+          <div class="detail">
+            <h4>Step-by-step Process</h4>
+            <ol>
+              <li><strong>Prep</strong> — remove parts carefully, deburr and test-fit.</li>
+              <li><strong>Prime</strong> — use light coats, inspect for seams.</li>
+              <li><strong>Sanding</strong> — work up through grits; wet-sanding for smooth finish.</li>
+              <li><strong>Base coats</strong> — thin paint 1.5–2.5x depending on brand; multiple passes.</li>
+              <li><strong>Mask & detail</strong> — crisp color separations and panel accents.</li>
+              <li><strong>Decals</strong> — gloss base → set → sol → seal → final topcoat.</li>
+              <li><strong>Photography</strong> — lighting and composition showcase your work.</li>
+            </ol>
+          </div>
+
+          <div style="margin-top:12px" class="detail">
+            <h4>Photography Tips</h4>
+            <ul>
+              <li>Use soft directional light (softbox) to show finish without harsh reflections.</li>
+              <li>Neutral background (gray/black/white) keeps focus on the model.</li>
+              <li>Use tripod and small aperture (f/8–f/11) for sharp detail.</li>
+            </ul>
+          </div>
+        </section>
+      </main>
+
+      <aside class="card">
+        <h2 class="section-title">Tools & Checklist</h2>
+
+        <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:14px">
+          <div class="tool">
+            <div class="tool-icon">🎨</div>
+            <div>
+              <strong>Airbrush</strong>
+              <div style="color:var(--muted); font-size:0.9rem">Dual-action, 0.2–0.3mm nozzle</div>
+            </div>
+          </div>
+          <div class="tool">
+            <div class="tool-icon">✂️</div>
+            <div>
+              <strong>Precision Tools</strong>
+              <div style="color:var(--muted); font-size:0.9rem">Nipper, file, sanding set</div>
+            </div>
+          </div>
+          <div class="tool">
+            <div class="tool-icon">🖌️</div>
+            <div>
+              <strong>Decals</strong>
+              <div style="color:var(--muted); font-size:0.9rem">Micro Set & Sol for conforming</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <h4 style="color:var(--primary); margin-bottom:8px;">Quick Checklist</h4>
+          <div class="checklist" id="checklist">
+            <label class="check-item">
+              <input type="checkbox" value="Airbrush & compressor">
+              <span>Airbrush & compressor</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" value="Primer & paints">
+              <span>Primer & paints</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" value="Sanding set">
+              <span>Sanding set (400–2000)</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" value="Masking tape">
+              <span>Masking tape</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" value="Decal solutions">
+              <span>Micro Set / Micro Sol</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" value="Topcoats">
+              <span>Topcoats (matte/satin/gloss)</span>
+            </label>
+          </div>
+
+          <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:wrap">
+            <button id="copyList" class="btn-primary">Copy checklist</button>
+            <button id="printList" class="btn-primary">Print checklist</button>
+          </div>
+        </div>
+
+        <div style="margin-top:14px" class="detail">
+          <h4>Common Mistakes & Fixes</h4>
+          <ul>
+            <li>Thick coats → runs. Fix: sand & re-prime, thin paint more.</li>
+            <li>Silvering under decals → use gloss base before decals.</li>
+            <li>Uneven masking → use better tape and burnish edges.</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+
+    <footer>Deep, practical, and inspiring — a guide to celebrate model building craft and share essential techniques.</footer>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // Barrel Roll Animation
+    function doBarrelRoll() {
+      document.body.classList.add('barrel-roll');
+      setTimeout(() => document.body.classList.remove('barrel-roll'), 1000);
+      showToast('🔄 Do a barrel roll!');
+    }
+
+    // Accordion functionality
+    document.querySelectorAll('.acc-head').forEach(head => {
+      head.addEventListener('click', () => {
+        const item = head.parentElement;
+        item.classList.toggle('open');
+      });
+    });
+
+    // Checklist copy / print
+    const copyBtn = document.getElementById('copyList');
+    const printBtn = document.getElementById('printList');
+    const checklist = document.getElementById('checklist');
+
+    copyBtn.addEventListener('click', () => {
+      const items = Array.from(checklist.querySelectorAll('input[type=checkbox]')).map(cb => 
+        (cb.checked ? '[x] ' : '[ ] ') + cb.parentElement.textContent.trim()
+      );
+      const text = 'Model Building Checklist:\n' + items.join('\n');
+      navigator.clipboard?.writeText(text).then(
+        () => showToast('✅ Checklist copied to clipboard!'),
+        () => showToast('❌ Could not copy')
+      );
+    });
+
+    printBtn.addEventListener('click', () => {
+      const items = Array.from(checklist.querySelectorAll('input[type=checkbox]')).map(cb => 
+        (cb.checked ? '☑ ' : '☐ ') + cb.parentElement.textContent.trim()
+      );
+      const html = `<html><head><title>Model Building Checklist</title><style>body{font-family:Inter,system-ui;color:#0b2433;padding:20px}li{margin:8px 0}</style></head><body><h2>Model Building Checklist</h2><ul>${items.map(i=>'<li>'+i+'</li>').join('')}</ul></body></html>`;
+      const w = window.open('', '_blank');
+      w.document.write(html);
+      w.document.close();
+      w.print();
+    });
+
+    // Toast notification
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Gentle entrance animation
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.tile, .detail, .tool, .acc-item').forEach((el, i) => {
+        el.style.opacity = 0;
+        el.style.transform = 'translateY(12px)';
+        setTimeout(() => {
+          el.style.transition = 'opacity .6s ease, transform .6s ease';
+          el.style.opacity = 1;
+          el.style.transform = 'translateY(0)';
+        }, i * 40);
+      });
+    });
+  </script>
+</body>
+</html>

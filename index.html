@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Choose a Hobby — Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{ --bg:#061021; --accent-blue:#2f6bff; --accent-cyan:#66e0ff; --muted:#bfeaff; --white:#eefcff; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{ font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      background: linear-gradient(180deg,#02061a 0%, #07306a 100%); color:var(--muted);
+      display:flex; align-items:center; justify-content:center; padding:28px;
+    }
+    .home-root{ width:min(1000px,96%); text-align:center; }
+    .home-hero h1{ font-weight:800; color:var(--accent-cyan); font-size:2.2rem; margin-bottom:6px; }
+    .subtitle{ color:#cfeeff; margin-bottom:20px }
+    .choices{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:12px; }
+    .card{ display:flex; flex-direction:column; gap:12px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:22px; border-radius:14px; text-decoration:none; color:var(--white);
+      border:1px solid rgba(255,255,255,0.03); transition:transform .18s ease, box-shadow .18s;
+    }
+    .card:hover{ transform:translateY(-8px); box-shadow:0 30px 90px rgba(24,80,160,0.18) }
+    .card h2{ margin:0; font-size:1.3rem }
+    .card p{ color:#dff6ff; font-size:.98rem }
+    .cta{ margin-top:auto; padding:10px 14px; border-radius:999px; align-self:start;
+      background:linear-gradient(90deg,var(--accent-cyan),var(--accent-blue)); color:#04112a;
+      font-weight:700; width:max-content;
+    }
+    .home-foot{ margin-top:18px; color:#9fd8ff; font-size:.9rem }
+    @media (max-width:840px){ .choices{ grid-template-columns:1fr } .cta{ align-self:stretch; text-align:center } }
+  </style>
+</head>
+<body>
+  <main class="home-root">
+    <header class="home-hero">
+      <h1>Pick a Hobby</h1>
+      <p class="subtitle">Two places I return to for focus and creativity — choose one to explore.</p>
+    </header>
+
+    <div class="choices">
+      <a class="card" href="gunpla.html" aria-label="Go to Gunpla page">
+        <h2>Building Gunpla</h2>
+        <p>Spray painting, meticulous finishing, and experimenting with new builds — a hands-on, creative ritual.</p>
+        <div class="cta">Explore Gunpla →</div>
+      </a>
+
+      <a class="card" href="jazz.html" aria-label="Go to Jazz page">
+        <h2>Listening to Jazz</h2>
+        <p>Improvisation, storytelling, and mood — music I return to again and again.</p>
+        <div class="cta">Explore Jazz →</div>
+      </a>
+    </div>
+
+    <footer class="home-foot">
+      <small>Made with love — pick one and enjoy.</small>
+    </footer>
+  </main>
+</body>
+</html>
